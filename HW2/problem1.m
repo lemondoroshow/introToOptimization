@@ -20,3 +20,9 @@ x = linprog(c, A, b, [], [], zeros(5, 1), [])
 % Solve optimal obj func
 obj = c * x
 
+% Define new objective function
+c2 = [6.72 3.19 2.69 7.29 500]
+
+% Solve new linear program & obj func
+x2 = linprog(c2, A, b, [], [], zeros(5, 1), [])
+obj2 = c2 * x2
