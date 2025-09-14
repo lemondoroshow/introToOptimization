@@ -1,3 +1,4 @@
+% Start diary
 echo on
 diary HW2prob1.txt
 
@@ -12,3 +13,10 @@ A = [-590 -170 -140 -310 -150;
      85 25 0 250 0;
      1050 340 310 770 40]
 b = [-2000; -275; -50; 78; 300; 2300]
+
+% Solve linear program
+x = linprog(c, A, b, [], [], zeros(5, 1), [])
+
+% Solve optimal obj func
+obj = c * x
+
