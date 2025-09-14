@@ -27,30 +27,33 @@ c2 = [6.72 3.19 2.69 7.29 500]
 x2 = linprog(c2, A, b, [], [], zeros(5, 1), [])
 obj2 = c2 * x2
 
-% Attempt 1 to adjust b to reduce cost
-b2 = [-1500; -275; -50; 78; 300; 2300]
+% Adjust sodium to reduce cost
+b2 = [-2000; -275; -50; 78; 300; 3500]
 x3 = linprog(c2, A, b2, [], [], zeros(5, 1), [])
 obj3 = c2 * x3
 
-% Attempt 2 to adjust b to reduce cost
-b3 = [-1500; -150; -50; 78; 300; 2300]
+% Adjust cholesterol to reduce cost
+b3 = [-2000; -275; -50; 78; 600; 3500]
 x4 = linprog(c2, A, b3, [], [], zeros(5, 1), [])
 obj4 = c2 * x4
 
-% Attempt 3 to adjust b to reduce cost
-b4 = [-1000; -150; -50; 78; 300; 2300]
+% Adjust cholesterol to reduce cost
+b4 = [-2000; -275; -50; 100; 600; 3500]
 x5 = linprog(c2, A, b4, [], [], zeros(5, 1), [])
 obj5 = c2 * x5
 
-% Attempt 4 to adjust b to reduce cost
-b5 = [-1000; -150; -50; 78; 300; 3200]
+% Tune all parameters
+b5 = [-2000; -275; -50; 100; 600; 4000]
 x6 = linprog(c2, A, b5, [], [], zeros(5, 1), [])
-obj5 = c2 * x6
+obj6 = c2 * x6
 
-% Attempt 5 to adjust b to reduce cost
-b6 = [-1000; -150; -50; 95; 300; 3200]
-x7 = linprog(c2, A, b6, [], [], zeros(5, 1), [])
-obj5 = c2 * x7
+b5 = [-2000; -275; -50; 150; 600; 4000]
+x6 = linprog(c2, A, b5, [], [], zeros(5, 1), [])
+obj6 = c2 * x6
+
+b5 = [-2000; -275; -50; 150; 600; 5000]
+x6 = linprog(c2, A, b5, [], [], zeros(5, 1), [])
+obj6 = c2 * x6
 
 % Close diary
 diary off
