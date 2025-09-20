@@ -22,23 +22,22 @@ for i = 1:size(combos, 1)
 
     % If reduced columns are lin indep, continue
     if rref(A_selected) == eye(size(A, 1))
-        successes = successes + 1 % Debugging
         
         % Find c_b by multiplying selected values by A_inverse
         A_selected_inv = inv(A(1:size(A, 1), combo))
         c_b = A_selected_inv * c(combo, 1:size(c, 2))
-
-        % Create zero vector, replace values
-        c_new = c_z
-        c_new(combo) = c_b
         
-        % Add to total if no negatives
-        if any(c_new < 0) ~= 1
+        % If all elements are non-negative, continue
+        if all(c_b >= 0)
+            successes = successes + 1 % Debugging
+
+            % Create zero vector, replace values
+            c_new = c_z
+            c_new(combo) = c_b
+        
+            % Add to totaL
             all_bfvs = [all_bfvs; c_new']
         end
-
-    else
-        
     end
 end
 
