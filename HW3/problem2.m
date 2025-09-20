@@ -35,7 +35,7 @@ for i = 1:size(combos, 1)
             c_new = c_z
             c_new(combo) = c_b
         
-            % Add to totaL
+            % Add to total
             all_bfvs = [all_bfvs; c_new']
         end
     end
