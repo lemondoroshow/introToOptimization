@@ -1,3 +1,7 @@
+% Start diary
+echo on
+diary HW4prob1.txt
+
 % Define A, b, c
 A = [0.27 0.12 0.045 1 0 0 0; 
      1 0.75 0.2 0 1 0 0; 
@@ -47,3 +51,6 @@ for i = 1:7
         end
     end
 end
+
+% End diary
+diary off
