@@ -8,6 +8,7 @@ c = [-200.2; -50.2; -25.2; 0; 0; 0; 0]
 bfvs = []
 ofvs = []
 r_nTs = []
+selected_columns = []
 
 % Iterate
 for i = 1:7
@@ -38,6 +39,7 @@ for i = 1:7
                         bfvs = [bfvs; new_vector']
                         ofvs = [ofvs; ofv]
                         r_nTs = [r_nTs; r_n']
+                        selected_columns = [selected_columns; [i j k u]]
                         
                     end
 
