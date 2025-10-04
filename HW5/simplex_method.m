@@ -2,10 +2,13 @@
 format shortG
 
 % Import / set data
-A = [];
-b = [];
-c = [];
-basis_selection = [];
+A = [0.27 0.12 0.045 1 0 0 0; 
+     1 0.75 0.2 0 1 0 0; 
+     2 -1 0 0 0 1 0;
+     0 0 1 0 0 0 1];
+b = [100; 480; 0; 300];
+c = [-200.2; -50.2; -25.2; 0; 0; 0; 0];
+basis_selection = [1 2 4 7];
 
 % Split constraints
 B = A(:, basis_selection);
@@ -31,11 +34,10 @@ basic_tableau = [1, zero_row, r_nT, ofv;
                  zero_col, I, invB_N, x_b]
 
 % Start loop until all reduced costs are positive
-loop_no = 1;
 while any(r_nT > 0)
     
     % Find greatest reduced cost
-    [temp_row, pivot_col] = find(basic_tableau == max(r_nT));
+    [~, pivot_col] = find(basic_tableau == max(r_nT));
 
     % Loop through pivot column rows to find lowest positive ratio
     last_col = size(basic_tableau, 2);
@@ -68,9 +70,28 @@ while any(r_nT > 0)
             - basic_tableau(irow, pivot_col) ...
             * basic_tableau(pivot_row, :);
     end
+    
+    % Simplify and display tableau
+    basic_tableau
 
     % Define new reduced costs
     r_nT = basic_tableau(1, 2:(last_col - 1));
     r_nT = r_nT(r_nT ~= 0);
+
+    % Find basis and OFV
+    [~, basis_index] = find(basic_tableau(1,:) == 0);
+    ofv = basic_tableau(1, last_col);
     
+    % Find x
+    x_b = basic_tableau(2:end, last_col);
+    x = zeros(size(A, 2), 1);
+    x(basis_index - 1, :) = x_b;
+
 end
+
+% Display final parameters
+% I'm not sure if this x is correct? TODO: Fix
+disp("Optimal x")
+disp(x)
+disp("Optimal OFV")
+disp(ofv)
