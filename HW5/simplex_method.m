@@ -57,18 +57,6 @@ while any(r_nT > 0)
             end
         end
     end
-    
-    %{
-    comparison = basic_tableau(2:end, [pivot_col last_col]);
-    comparison = comparison(:, 2) ./ comparison(:, 1);
-
-    % Find lowest positive ratio
-    comparison = comparison(comparison > 0);
-    pivot_val = min(comparison);
-
-    % Find index in tablaeau
-    [pivot_row, temp_col] = find(basic_tableau(:, last_col) == pivot_val);
-    %}
 
     % Use row operations to ensure pivot point == 1
     basic_tableau(pivot_row, :) = basic_tableau(pivot_row, :) ...
@@ -81,11 +69,8 @@ while any(r_nT > 0)
             * basic_tableau(pivot_row, :);
     end
 
-    % Debugging 
-    basic_tableau
-    
     % Define new reduced costs
     r_nT = basic_tableau(1, 2:(last_col - 1));
-    r_nT = r_nT(r_nT ~= 0)
+    r_nT = r_nT(r_nT ~= 0);
     
 end
