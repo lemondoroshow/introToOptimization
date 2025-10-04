@@ -2,13 +2,21 @@
 format shortG
 
 % Import / set data
+%{
+load('prob1datafile.mat')
+disp(A)
+disp(b)
+disp(c)
+basis_selection = [1 2 3];
+%}
 A = [0.27 0.12 0.045 1 0 0 0; 
      1 0.75 0.2 0 1 0 0; 
      2 -1 0 0 0 1 0;
-     0 0 1 0 0 0 1];
-b = [100; 480; 0; 300];
-c = [-200.2; -50.2; -25.2; 0; 0; 0; 0];
-basis_selection = [1 2 4 7];
+     0 0 1 0 0 0 1]
+b = [100; 480; 0; 300]
+c = [-200.2; -50.2; -25.2; 0; 0; 0; 0]
+basis_selection = [2 3 4 5]
+
 
 % Split constraints
 B = A(:, basis_selection);
@@ -37,7 +45,7 @@ basic_tableau = [1, zero_row, r_nT, ofv;
 while any(r_nT > 0)
     
     % Find greatest reduced cost
-    [~, pivot_col] = find(basic_tableau == max(r_nT));
+    pivot_col = find(abs(basic_tableau(1, :) - max(r_nT)) < 0.0001);
 
     % Loop through pivot column rows to find lowest positive ratio
     last_col = size(basic_tableau, 2);
@@ -45,10 +53,9 @@ while any(r_nT > 0)
     for i = 2:size(basic_tableau, 1)
         
         % Ensure ratio is non-negative
-        % WARNING: MAY STALL
         pivot_ratio = basic_tableau(i, last_col) / ...
                 basic_tableau(i, pivot_col);
-        if pivot_ratio >= 0
+        if pivot_ratio ~= 0 & basic_tableau(i, last_col) > 0
             
             % Add to collection, check if its the lowest
             pivot_ratios = [pivot_ratios pivot_ratio];
@@ -65,10 +72,14 @@ while any(r_nT > 0)
          .* 1 / basic_tableau(pivot_row, pivot_col);
     
     % Reduce rows
-    for irow = setdiff(1:size(basic_tableau, 1), pivot_row)
-        basic_tableau(irow, :) = basic_tableau(irow, :) ...
-            - basic_tableau(irow, pivot_col) ...
-            * basic_tableau(pivot_row, :);
+    for irow = 1:size(basic_tableau, 1)
+        if (basic_tableau(irow, last_col) ~= 0 ... % Prevent stalling
+            & irow ~= pivot_row) ... % Don't operate on pivot row
+            | irow == 1 % Ensure top row is included, even if OFV == 0
+            basic_tableau(irow, :) = basic_tableau(irow, :) ...
+                - basic_tableau(irow, pivot_col) ...
+                * basic_tableau(pivot_row, :);
+        end
     end
     
     % Simplify and display tableau
@@ -79,18 +90,18 @@ while any(r_nT > 0)
     r_nT = r_nT(r_nT ~= 0);
 
     % Find basis and OFV
-    [~, basis_index] = find(basic_tableau(1,:) == 0);
+    [~, basis_index] = find(basic_tableau(1, 2:last_col - 1) == 0);
     ofv = basic_tableau(1, last_col);
     
     % Find x
     x_b = basic_tableau(2:end, last_col);
     x = zeros(size(A, 2), 1);
-    x(basis_index - 1, :) = x_b;
+    x(basis_index, :) = x_b;
 
 end
 
 % Display final parameters
-% I'm not sure if this x is correct? TODO: Fix
+% TODO: Fix
 disp("Optimal x")
 disp(x)
 disp("Optimal OFV")
