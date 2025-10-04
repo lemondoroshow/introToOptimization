@@ -1,23 +1,16 @@
+% Turn on diary
+echo on
+diary HW5prob1.txt
+
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-%{
 load('prob1datafile.mat')
 disp(A)
 disp(b)
 disp(c)
 basis_selection = [1 2 3];
-%}
-A = [0.27 0.12 0.045 1 0 0 0; 
-     1 0.75 0.2 0 1 0 0; 
-     2 -1 0 0 0 1 0;
-     0 0 1 0 0 0 1]
-b = [100; 480; 0; 300]
-c = [-200.2; -50.2; -25.2; 0; 0; 0; 0]
-basis_selection = [1 2 4 7]
-
-
 
 % Split constraints
 B = A(:, basis_selection);
@@ -137,3 +130,6 @@ disp("Optimal x")
 disp(x)
 disp("Optimal OFV")
 disp(ofv)
+
+% Turn off diary
+diary off
