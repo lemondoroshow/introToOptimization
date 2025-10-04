@@ -1,12 +1,12 @@
 % Turn on diary
 echo on
-diary HW5prob2.txt
+diary HW5prob1.txt
 
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-load('prob2datafile.mat')
+load('prob1datafile.mat')
 disp(A)
 disp(b)
 disp(c)
@@ -39,7 +39,7 @@ basic_tableau = [1, zero_row, r_nT, ofv;
 while any(r_nT > 0)
     
     % Find greatest reduced cost
-    pivot_col = find(abs(basic_tableau(1, :) - max(r_nT)) < 0.0001);
+    pivot_col = find(abs(basic_tableau(1, 2:end) - max(r_nT)) < 0.0001) + 1;
 
     % Loop through pivot column rows to find lowest positive ratio
     last_col = size(basic_tableau, 2);
@@ -86,7 +86,7 @@ while any(r_nT > 0)
         end
     end
     
-    % Simplify and display tableau
+    % Display tableau
     basic_tableau
 
     % Define new reduced costs
