@@ -15,7 +15,8 @@ A = [0.27 0.12 0.045 1 0 0 0;
      0 0 1 0 0 0 1]
 b = [100; 480; 0; 300]
 c = [-200.2; -50.2; -25.2; 0; 0; 0; 0]
-basis_selection = [2 3 4 5]
+basis_selection = [1 2 4 7]
+
 
 
 % Split constraints
@@ -55,7 +56,8 @@ while any(r_nT > 0)
         % Ensure ratio is non-negative
         pivot_ratio = basic_tableau(i, last_col) / ...
                 basic_tableau(i, pivot_col);
-        if pivot_ratio ~= 0 & basic_tableau(i, last_col) > 0
+        if pivot_ratio ~= 0 && ...
+                basic_tableau(i, last_col) > 0
             
             % Add to collection, check if its the lowest
             pivot_ratios = [pivot_ratios pivot_ratio];
@@ -74,8 +76,17 @@ while any(r_nT > 0)
     % Reduce rows
     for irow = 1:size(basic_tableau, 1)
         if (basic_tableau(irow, last_col) ~= 0 ... % Prevent stalling
-            & irow ~= pivot_row) ... % Don't operate on pivot row
-            | irow == 1 % Ensure top row is included, even if OFV == 0
+            && irow ~= pivot_row) ... % Don't operate on pivot row
+            || irow == 1 % Ensure top row is included, even if OFV == 0
+
+            basic_tableau(irow, :) = basic_tableau(irow, :) ...
+                - basic_tableau(irow, pivot_col) ...
+                * basic_tableau(pivot_row, :);
+
+        elseif basic_tableau(irow, last_col) ... % Account for weird edge-
+                - basic_tableau(irow, pivot_col) ... % case
+                * basic_tableau(pivot_row, last_col) > 0
+
             basic_tableau(irow, :) = basic_tableau(irow, :) ...
                 - basic_tableau(irow, pivot_col) ...
                 * basic_tableau(pivot_row, :);
@@ -88,20 +99,40 @@ while any(r_nT > 0)
     % Define new reduced costs
     r_nT = basic_tableau(1, 2:(last_col - 1));
     r_nT = r_nT(r_nT ~= 0);
-
-    % Find basis and OFV
-    [~, basis_index] = find(basic_tableau(1, 2:last_col - 1) == 0);
-    ofv = basic_tableau(1, last_col);
-    
-    % Find x
-    x_b = basic_tableau(2:end, last_col);
-    x = zeros(size(A, 2), 1);
-    x(basis_index, :) = x_b;
-
 end
 
-% Display final parameters
-% TODO: Fix
+% Loop through rows to find x-indices
+var_row = [];
+for irow = 2:size(basic_tableau, 1)
+    for icol = 2:size(basic_tableau, 2)
+
+        % Get matrix value
+        val = basic_tableau(irow, icol);
+
+        % Check that column has one 1, rest 0s
+        ovic = basic_tableau(setdiff(1:size(basic_tableau, 1), irow), icol);
+        if val == 1 && ... 
+                all(ovic == 0)
+                
+            % Store which row the variable is in  
+            var_row = [var_row; [icol - 1, irow]];
+        end
+    end
+end
+
+% Form x vector
+% Still unsure if this is correct, but I don't know why it wouldn't be
+x = zeros(size(A, 2), 1);
+for var = 1:size(var_row, 1)
+    
+    % Set x at the position of the variable to the optimal vector value
+    x(var_row(var, 1), :) = basic_tableau(var_row(var, 2), last_col);
+end
+
+% Isolate OFV
+ofv = basic_tableau(1, last_col);
+
+% Output optimal x, OFV
 disp("Optimal x")
 disp(x)
 disp("Optimal OFV")
