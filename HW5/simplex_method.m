@@ -1,12 +1,12 @@
 % Turn on diary
 echo on
-diary HW5prob1.txt
+diary HW5prob2.txt
 
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-load('prob1datafile.mat')
+load('prob2datafile.mat')
 disp(A)
 disp(b)
 disp(c)
