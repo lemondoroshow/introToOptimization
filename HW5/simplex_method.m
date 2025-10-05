@@ -4,11 +4,11 @@
 format shortG
 
 % Import / set data
-load('prob2datafile.mat')
+load('prob5datafile.mat')
 disp(A)
 disp(b)
 disp(c)
-basis = 1:3;
+basis = 4:7;
 
 % Arrange pre-tableau
 pretableau = [1, -1*c', 0;
@@ -142,4 +142,40 @@ while any(neg_r_nT >= 0)
     loop_no = loop_no + 1
 end
 
-%%
+%% Calculate optimal x, OFV
+
+% Loop through rows to find x-indices
+var_row = [];
+for irow = 2:size(tableau, 1)
+    for icol = 2:size(tableau, 2)
+
+        % Get matrix value
+        val = tableau(irow, icol);
+
+        % Check that column has one 1, rest 0s
+        ovic = tableau(setdiff(1:size(tableau, 1), irow), icol);
+        if val == 1 && ... 
+                all(ovic == 0)
+                
+            % Store which row the variable is in  
+            var_row = [var_row; [icol - 1, irow]];
+        end
+    end
+end
+
+% Form x vector
+x = zeros(size(A, 2), 1);
+for var = 1:size(var_row, 1)
+    
+    % Set x at the position of the variable to the optimal vector value
+    x(var_row(var, 1), :) = tableau(var_row(var, 2), last_col);
+end
+
+% Isolate OFV
+ofv = tableau(1, last_col);
+
+% Output optimal x, OFV
+disp("Optimal x")
+disp(x)
+disp("Optimal OFV")
+disp(ofv)
