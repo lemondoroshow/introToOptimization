@@ -1,17 +1,17 @@
 %% Create pre-tableau
 
 % Turn on diary
-diary HW5prob4.txt
+diary HW5prob5.txt
 
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-load('prob4datafile.mat')
+load('prob5datafile.mat')
 disp(A)
 disp(b)
 disp(c)
-basis = [3 5 6 7 8];
+basis = 4:7;
 
 % Arrange pre-tableau
 pretableau = [1, -1*c', 0;
