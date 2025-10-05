@@ -4,7 +4,7 @@
 format shortG
 
 % Import / set data
-load('prob1datafile.mat')
+load('prob2datafile.mat')
 disp(A)
 disp(b)
 disp(c)
@@ -14,6 +14,7 @@ basis = 1:3;
 pretableau = [1, -1*c', 0;
               zeros(size(A,1),1), A, b]
 
+disp("Done")
 %% Create initial tableau
 
 % Iterate through selected basis
@@ -40,6 +41,7 @@ end
 
 tableau = pretableau
 
+disp("Done")
 %% Find initial reduced costs
 
 neg_r_nT = [];
@@ -62,9 +64,11 @@ end
 % Create "dictionary" for reduced costs
 neg_r_nT_i = [neg_r_nT neg_r_nT_i];
 
+disp("Done")
 %% Loop through simplex method
 
 % Iterate while any reduced costs are non-negative
+loop_no = 1
 while any(neg_r_nT >= 0)
 
     % Find greatest reduced cost
@@ -92,6 +96,11 @@ while any(neg_r_nT >= 0)
         end
     end
     
+    if all(pivot_ratio < 0)
+        disp("Program is unbounded")
+        break
+    end
+
     % Use row operations to ensure pivot point == 1
     tableau(pivot_row, :) = tableau(pivot_row, :) ...
          .* 1 / tableau(pivot_row, pivot_col);
@@ -130,6 +139,7 @@ while any(neg_r_nT >= 0)
     
     % Create "dictionary" for reduced costs
     neg_r_nT_i = [neg_r_nT neg_r_nT_i];
+    loop_no = loop_no + 1
 end
 
 %%
