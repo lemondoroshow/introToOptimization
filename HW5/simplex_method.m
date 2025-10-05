@@ -1,15 +1,15 @@
 % Turn on diary
-diary HW5prob4.txt
+diary HW5prob5.txt
 
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-load('prob4datafile.mat')
+load('prob5datafile.mat')
 disp(A)
 disp(b)
 disp(c)
-basis_selection = [3 5 6 7 8];
+basis_selection = 4:7;
 
 % Split constraints
 B = A(:, basis_selection);
