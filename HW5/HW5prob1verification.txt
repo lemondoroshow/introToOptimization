@@ -1,0 +1,58 @@
+simplex_verification
+[Warning: Matrix is close to singular or badly scaled. Results may be inaccurate. RCOND =  1.206764e-18.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('simplex_verification', '/home/lemondoroshow/Courses/introToOptimization/HW5/simplex_verification.m', 19)" style="font-weight:bold">simplex_verification</a> (<a href="matlab: opentoline('/home/lemondoroshow/Courses/introToOptimization/HW5/simplex_verification.m',19,0)">line 19</a>)
+] 
+[Warning: Matrix is singular to working precision.] 
+[> In <a href="matlab:matlab.lang.internal.introspective.errorDocCallback('simplex_verification', '/home/lemondoroshow/Courses/introToOptimization/HW5/simplex_verification.m', 19)" style="font-weight:bold">simplex_verification</a> (<a href="matlab: opentoline('/home/lemondoroshow/Courses/introToOptimization/HW5/simplex_verification.m',19,0)">line 19</a>)
+] 
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            1            0            0            0            0            0
+            0            0          0.5            0            0          0.3          0.1
+            0            0            0          0.2            0          0.4          0.2
+
+            2
+            2
+            2
+            2
+            2
+            2
+            2
+            2
+            2
+            2
+            2
+            2
+            2
+            2
+          1.8
+          1.4
+
+           -3           -1           -2            4
+            1           -2           -4            5
+           -1           -6   1.2079e-13            3
+           -1           -6   7.1054e-15            3
+           -4          -15            3            6
+            3            8            1           -5
+      0.33333      -2.6667      -1.6667            3
+            2           -1            5           -2
+       1.3333      -1.6667            3     -0.66667
+          0.6          0.8           -3            3
+          2.4          0.2            6           -3
+          1.5          0.5            3         -1.5
+            0           -1           -6            3
+          1.2         -0.4           -3            3
+          1.2          0.2           -2          2.2
+          1.2          0.6          0.8          0.6
+

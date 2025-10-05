@@ -1,5 +1,4 @@
 % Turn on diary
-echo on
 diary HW5prob1.txt
 
 % For my sake, turn off scientific notation
@@ -10,7 +9,7 @@ load('prob1datafile.mat')
 disp(A)
 disp(b)
 disp(c)
-basis_selection = [1 2 3];
+basis_selection = 1:3;
 
 % Split constraints
 B = A(:, basis_selection);
@@ -33,10 +32,13 @@ ofv = c_b' * x_b;
 
 % Construct tableau
 basic_tableau = [1, zero_row, r_nT, ofv;
-                 zero_col, I, invB_N, x_b]
+                 zero_col, I, invB_N, x_b];
+disp(basic_tableau)
 
 % Start loop until all reduced costs are positive
-while any(r_nT > 0)
+loop_no = 1; % Debugging
+disp(loop_no)
+while any(r_nT > 0) & loop_no <= 1000 % Just in case of cycling
     
     % Find greatest reduced cost
     pivot_col = find(abs(basic_tableau(1, 2:end) - max(r_nT)) < 0.0001) + 1;
@@ -87,11 +89,15 @@ while any(r_nT > 0)
     end
     
     % Display tableau
-    basic_tableau
+    disp(basic_tableau)
 
     % Define new reduced costs
     r_nT = basic_tableau(1, 2:(last_col - 1));
     r_nT = r_nT(r_nT ~= 0);
+
+    % Debugging
+    loop_no = loop_no + 1;
+    disp(loop_no)
 end
 
 % Loop through rows to find x-indices
