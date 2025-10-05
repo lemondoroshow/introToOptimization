@@ -1,13 +1,13 @@
 %% Create pre-tableau
 
 % Turn on diary
-diary HW5prob1.txt
+diary HW5prob2.txt
 
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-load('prob1datafile.mat')
+load('prob2datafile.mat')
 disp(A)
 disp(b)
 disp(c)
@@ -148,6 +148,7 @@ end
 
 %% Calculate optimal x, OFV
 
+%{
 % Loop through rows to find x-indices
 var_row = [];
 for irow = 2:size(tableau, 1)
@@ -183,6 +184,7 @@ disp("Optimal x")
 disp(x)
 disp("Optimal OFV")
 disp(ofv)
+%}
 
 % Turn diary off
 diary off
