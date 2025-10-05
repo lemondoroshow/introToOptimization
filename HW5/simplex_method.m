@@ -95,6 +95,8 @@ function [x, ofv] = simplexMethod(A, b, c, basis)
         if all(pivot_ratio < 0)
             disp("Program is unbounded")
             finished = false;
+            x = NaN(1, 1);
+            ofv = NaN(1, 1);
             break
         end
     
@@ -190,7 +192,7 @@ disp(c)
 basis = 1:3;
 
 % Output optimal x, OFV
-x, ofv = simplexMethod(A, b, c, basis);
+[x, ofv] = simplexMethod(A, b, c, basis);
 disp("Optimal x")
 disp(x)
 disp("Optimal OFV")
