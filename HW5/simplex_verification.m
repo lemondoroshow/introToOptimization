@@ -1,5 +1,5 @@
 % Define A, b, c
-load("prob1datafile.mat")
+load("prob2datafile.mat")
 bfvs = []
 ofvs = []
 r_nTs = []
