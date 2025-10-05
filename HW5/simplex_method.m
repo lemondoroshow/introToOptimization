@@ -1,21 +1,21 @@
 %% Create pre-tableau
 
 % Turn on diary
-diary HW5prob5.txt
+diary HW5prob3.txt
 
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-load('prob5datafile.mat')
-disp(A)
-disp(b)
-disp(c)
-basis = 4:7;
+load('prob3datafile.mat')
+% disp(A)
+% disp(b)
+% disp(c)
+basis = 1:1000;
 
 % Arrange pre-tableau
 pretableau = [1, -1*c', 0;
-              zeros(size(A,1),1), A, b]
+              zeros(size(A,1),1), A, b];
 
 disp("Done")
 %% Create initial tableau
@@ -42,7 +42,7 @@ for i = basis
     k = k + 1;
 end
 
-tableau = pretableau
+tableau = pretableau;
 
 disp("Done")
 %% Find initial reduced costs
@@ -121,7 +121,7 @@ while any(neg_r_nT >= 0)
     end
 
     % Dispay tableau
-    disp(tableau)
+    % disp(tableau)
     
     % Find next reduced costs
     neg_r_nT = [];
@@ -148,6 +148,7 @@ end
 
 %% Calculate optimal x, OFV
 
+%{
 % Loop through rows to find x-indices
 var_row = [];
 for irow = 2:size(tableau, 1)
@@ -185,6 +186,7 @@ disp("Optimal x")
 disp(x)
 disp("Optimal OFV")
 disp(ofv)
+%}
 
 % Turn diary off
 diary off
