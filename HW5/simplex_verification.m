@@ -1,8 +1,8 @@
 % Turn on diary
-diary HW5prob1verification.txt
+diary HW5prob2verification.txt
 
 % Define A, b, c
-load("prob1datafile.mat")
+load("prob2datafile.mat")
 bfvs = [];
 ofvs = [];
 r_nTs = [];

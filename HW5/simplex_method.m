@@ -1,11 +1,11 @@
 % Turn on diary
-diary HW5prob1.txt
+diary HW5prob2.txt
 
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-load('prob1datafile.mat')
+load('prob2datafile.mat')
 disp(A)
 disp(b)
 disp(c)
@@ -119,23 +119,27 @@ for irow = 2:size(basic_tableau, 1)
     end
 end
 
-% Form x vector
-% Still unsure if this is correct, but I don't know why it wouldn't be
-x = zeros(size(A, 2), 1);
-for var = 1:size(var_row, 1)
+% Check if simplex method converged
+if loop_no < 1000
+
+    % Form x vector
+    % Still unsure if this is correct, but I don't know why it wouldn't be
+    x = zeros(size(A, 2), 1);
+    for var = 1:size(var_row, 1)
     
-    % Set x at the position of the variable to the optimal vector value
-    x(var_row(var, 1), :) = basic_tableau(var_row(var, 2), last_col);
+        % Set x at the position of the variable to the optimal vector value
+        x(var_row(var, 1), :) = basic_tableau(var_row(var, 2), last_col);
+    end
+
+    % Isolate OFV
+    ofv = basic_tableau(1, last_col);
+
+    % Output optimal x, OFV
+    disp("Optimal x")
+    disp(x)
+    disp("Optimal OFV")
+    disp(ofv)
 end
-
-% Isolate OFV
-ofv = basic_tableau(1, last_col);
-
-% Output optimal x, OFV
-disp("Optimal x")
-disp(x)
-disp("Optimal OFV")
-disp(ofv)
 
 % Turn off diary
 diary off
