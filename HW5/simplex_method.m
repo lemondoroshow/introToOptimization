@@ -1,14 +1,17 @@
 %% Create pre-tableau
 
+% Turn on diary
+diary HW5prob1.txt
+
 % For my sake, turn off scientific notation
 format shortG
 
 % Import / set data
-load('prob5datafile.mat')
+load('prob1datafile.mat')
 disp(A)
 disp(b)
 disp(c)
-basis = 4:7;
+basis = 1:3;
 
 % Arrange pre-tableau
 pretableau = [1, -1*c', 0;
@@ -98,6 +101,7 @@ while any(neg_r_nT >= 0)
     
     if all(pivot_ratio < 0)
         disp("Program is unbounded")
+        finished = false;
         break
     end
 
@@ -179,3 +183,6 @@ disp("Optimal x")
 disp(x)
 disp("Optimal OFV")
 disp(ofv)
+
+% Turn diary off
+diary off
