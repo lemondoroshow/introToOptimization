@@ -1,15 +1,18 @@
+A: 
     18     7    13    -1    -1     0     0     0
      9    14     2    -1     0    -1     0     0
      2    19     1    -1     0     0    -1     0
      8     3    10    -1     0     0     0    -1
      1     1     1     0     0     0     0     0
 
+b: 
      0
      0
      0
      0
      1
 
+c: 
      0
      0
      0
@@ -29,7 +32,7 @@ pretableau =
      0     8     3    10    -1     0     0     0    -1     0
      0     1     1     1     0     0     0     0     0     1
 
-Done
+Pre-tableau complete
 
 tableau =
 
@@ -40,8 +43,8 @@ tableau =
             0           -1          -18            0            1            0            0            1            0            1
             0            2            7            0            1            0            0            0            1           10
 
-Done
-Done
+Initial tableau complete
+Reduced costs complete
 
 loop_no =
 
@@ -83,6 +86,7 @@ loop_no =
 
      4
 
+Simplex calculations complete
 Optimal x
       0.17262
       0.33929

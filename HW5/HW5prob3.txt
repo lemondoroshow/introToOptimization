@@ -1,6 +1,6 @@
-Done
-Done
-Done
+Pre-tableau complete
+Initial tableau complete
+Reduced costs complete
 
 loop_no =
 
@@ -57,3 +57,10 @@ loop_no =
     11
 
 Program is unbounded
+Simplex calculations complete
+Optimal x
+   NaN
+
+Optimal OFV
+   NaN
+

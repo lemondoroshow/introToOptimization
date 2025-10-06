@@ -1,11 +1,14 @@
 % For my sake, turn off scientific notation
 format shortG
 
-function [x, ofv] = simplexMethod(A, b, c, basis)
+function [x, ofv] = simplexMethod(A, b, c, basis, show)
 
     % Arrange pre-tableau
     pretableau = [1, -1*c', 0;
-                  zeros(size(A,1),1), A, b]
+                  zeros(size(A,1),1), A, b];
+    if show
+        disp(pretableau)
+    end
     
     disp("Pre-tableau complete")
 
@@ -33,7 +36,10 @@ function [x, ofv] = simplexMethod(A, b, c, basis)
         k = k + 1;
     end
     
-    tableau = pretableau
+    tableau = pretableau;
+    if show
+        disp(tableau)
+    end
     
     disp("Initial tableau complete")
 
@@ -116,7 +122,9 @@ function [x, ofv] = simplexMethod(A, b, c, basis)
         end
     
         % Dispay tableau
-        disp(tableau)
+        if show
+            disp(tableau)
+        end
         
         % Find next reduced costs
         neg_r_nT = [];
@@ -138,8 +146,9 @@ function [x, ofv] = simplexMethod(A, b, c, basis)
         
         % Create "dictionary" for reduced costs
         neg_r_nT_i = [neg_r_nT neg_r_nT_i];
+
+        % Increment
         loop_no = loop_no + 1
-    
         finished = true;
     end
     
@@ -182,19 +191,28 @@ function [x, ofv] = simplexMethod(A, b, c, basis)
     end
 end
 
+% Start diary
+diary HW5prob1.txt
+
 % Import / set data
 %   Any problem can be used, but problem 1 is left as an example /
 %   placeholder
 load('prob1datafile.mat')
+disp("A: ")
 disp(A)
+disp("b: ")
 disp(b)
+disp("c: ")
 disp(c)
 basis = 1:3;
+show = false;
 
 % Output optimal x, OFV
-[x, ofv] = simplexMethod(A, b, c, basis);
+[x, ofv] = simplexMethod(A, b, c, basis, show);
 disp("Optimal x")
 disp(x)
 disp("Optimal OFV")
 disp(ofv)
-    
+
+% End diary
+diary off
