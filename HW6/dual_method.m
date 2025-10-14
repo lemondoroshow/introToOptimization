@@ -1,7 +1,7 @@
 % Turn off scientific notation
 format shortG
 
-function [x, ofv] = dualMethod(A, b, c, basis, show)
+function [x, ofv, y] = dualMethod(A, b, c, basis, show)
 
     % Create pretableau
     
@@ -198,12 +198,17 @@ function [x, ofv] = dualMethod(A, b, c, basis, show)
     
         % Isolate OFV
         ofv = tableau(1, last_col);
-
+        
+        % Find y
+        basis = sort(var_row(:, 1));
+        c_b = c(basis, :);
+        B = A(:, basis);
+        y = c_b' / B;
     end
 end
 
 % Turn on diary
-diary HW6prob4.txt
+% diary HW6prob4.txt
 
 % Load data
 load("prob4datafile.mat")
@@ -211,11 +216,18 @@ basis = 6:11;
 show = true;
 
 % Run dual method
-[x, ofv] = dualMethod(A, b, c, basis, show);
+[x, ofv, y] = dualMethod(A, b, c, basis, show);
 
 % Show results
+disp("OFV: ")
 disp(ofv)
+disp("x: ")
 disp(x)
+disp("y: ")
+disp(y')
+disp('cTx = yTb')
+c' * x
+y * b
 
 % Turn diary off
-diary off
+% diary off
