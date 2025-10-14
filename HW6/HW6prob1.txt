@@ -82,8 +82,10 @@ loop_no =
      3
 
 Simplex calculations complete
+OFV: 
    -56
 
+x: 
      0
      0
      0
@@ -96,4 +98,21 @@ Simplex calculations complete
     35
     16
      0
+
+y: 
+       -4.125
+            6
+            8
+        9.625
+
+cTx = yTb
+
+ans =
+
+   -56
+
+
+ans =
+
+          -56
 

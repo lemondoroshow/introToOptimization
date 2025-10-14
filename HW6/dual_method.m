@@ -110,6 +110,7 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
             finished = false;
             x = NaN(1, 1);
             ofv = NaN(1, 1);
+            y = NaN(1, 1);
             break
         end
     
@@ -208,7 +209,7 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
 end
 
 % Turn on diary
-% diary HW6prob4.txt
+diary HW6prob4.txt
 
 % Load data
 load("prob4datafile.mat")
@@ -230,4 +231,4 @@ c' * x
 y * b
 
 % Turn diary off
-% diary off
+diary off

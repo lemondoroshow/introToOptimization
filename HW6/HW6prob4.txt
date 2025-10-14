@@ -62,8 +62,10 @@ loop_no =
      3
 
 Simplex calculations complete
+OFV: 
        26.935
 
+x: 
        1.8169
       0.50872
             0
@@ -75,4 +77,23 @@ Simplex calculations complete
         11.14
        132.85
             0
+
+y: 
+    -0.028645
+            0
+      -1.3557
+            0
+            0
+     -0.04267
+
+cTx = yTb
+
+ans =
+
+       26.935
+
+
+ans =
+
+       26.935
 
