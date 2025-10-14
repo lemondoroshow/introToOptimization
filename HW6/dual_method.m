@@ -38,7 +38,12 @@ function [x, ofv] = dualMethod(A, b, c, basis, show)
         k = k + 1;
     end
     
+    
     tableau = pretableau;
+
+    % Deal with super small values that should be zero
+        tableau(abs(tableau) < 0.0001) = 0;
+
     if show
         disp(tableau)
     end
@@ -66,7 +71,7 @@ function [x, ofv] = dualMethod(A, b, c, basis, show)
     % Loop through simplex method
     
     % Iterate while any x_b components are negative
-    loop_no = 1
+    loop_no = 0
     while any(x_b < 0)
     
         % Find lowest x_b component
@@ -79,8 +84,9 @@ function [x, ofv] = dualMethod(A, b, c, basis, show)
         for i = 2:size(tableau, 2) - 1
     
             % Ensure each part is non-positive or negative
-            if (tableau(1, i) < -0.0001 || ... % Less than ...
-                    abs(tableau(1, i)) < 0.0001) && ... % ... or equal to
+            % if (tableau(1, i) < -0.0001 || ... % Less than ...
+                    % abs(tableau(1, i)) < 0.0001) && ... % ... or equal to
+            if tableau(1, i) <= 0 && ...
                     tableau(pivot_row, i) < -0.0001 % Strictly less than
                 fails = [fails; 0];
     
@@ -149,7 +155,7 @@ function [x, ofv] = dualMethod(A, b, c, basis, show)
         
         % Create "dictionary" for x_b
         x_b_i = [x_b x_b_i];
-        
+
         % Increment
         loop_no = loop_no + 1
         finished = true;
@@ -192,13 +198,16 @@ function [x, ofv] = dualMethod(A, b, c, basis, show)
     
         % Isolate OFV
         ofv = tableau(1, last_col);
-    
+
     end
 end
 
+% Turn on diary
+diary HW6prob4.txt
+
 % Load data
-load("prob1datafile.mat")
-basis = 9:12;
+load("prob4datafile.mat")
+basis = 6:11;
 show = true;
 
 % Run dual method
@@ -207,3 +216,6 @@ show = true;
 % Show results
 disp(ofv)
 disp(x)
+
+% Turn diary off
+diary off
