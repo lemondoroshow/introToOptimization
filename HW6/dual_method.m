@@ -14,7 +14,7 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
     
     disp("Pre-tableau complete")
     
-    %Create initial tableau
+    % Create initial tableau
     
     % Iterate through selected basis
     k = 2;
@@ -38,11 +38,7 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
         k = k + 1;
     end
     
-    
     tableau = pretableau;
-
-    % Deal with super small values that should be zero
-        tableau(abs(tableau) < 0.0001) = 0;
 
     if show
         disp(tableau)
@@ -69,6 +65,7 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
     disp("x_b complete")
     
     % Loop through simplex method
+    x_bs = x_b';
     
     % Iterate while any x_b components are negative
     loop_no = 0
@@ -77,6 +74,9 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
         % Find lowest x_b component
         [~, pos] = min(x_b_i);
         pivot_row = x_b_i(pos(1), 2);
+
+        % Deal with super small values that should be zero
+        tableau(abs(tableau) < 0.0001) = 0;
     
         % Find lowest positive ratio
         pivot_ratios = [];
@@ -84,9 +84,8 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
         for i = 2:size(tableau, 2) - 1
     
             % Ensure each part is non-positive or negative
-            % if (tableau(1, i) < -0.0001 || ... % Less than ...
-                    % abs(tableau(1, i)) < 0.0001) && ... % ... or equal to
-            if tableau(1, i) <= 0 && ...
+            if (tableau(1, i) < -0.0001 || ... % Less than
+                    abs(tableau(1, i)) < 0.0001) && ... % or equal to
                     tableau(pivot_row, i) < -0.0001 % Strictly less than
                 fails = [fails; 0];
     
@@ -105,7 +104,8 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
         end
     
         % Check for unboundedness
-        if all(fails == 1)
+        if all(fails == 1) || ...
+                all(pivot_ratios <= 0)
             disp("Program is unbounded")
             finished = false;
             x = NaN(1, 1);
@@ -126,6 +126,7 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
                 tableau(irow, :) = tableau(irow, :) ...
                     - tableau(irow, pivot_col) ...
                     * tableau(pivot_row, :);
+
             end
         end
     
@@ -134,13 +135,10 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
             disp(tableau)
         end
     
-        % Deal with super small values that should be zero
-        tableau(abs(tableau) < 0.0001) = 0;
-    
         % Show OFV
         if ~show
+            disp('OFV:')
             disp(tableau(1, size(tableau, 2)))
-            disp(min(pivot_ratios))
         end
     
         % Find next x_b
@@ -156,6 +154,14 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
         
         % Create "dictionary" for x_b
         x_b_i = [x_b x_b_i];
+        
+        % Ensure no cycling
+        [presence, ~] = ismember(x_b, x_bs);
+        if presence
+            disp("Cycling!")
+            break
+        end
+        x_bs = [x_bs; x_b'];
 
         % Increment
         loop_no = loop_no + 1
@@ -209,17 +215,18 @@ function [x, ofv, y] = dualMethod(A, b, c, basis, show)
 end
 
 % Turn on diary
-diary HW6prob4.txt
+diary HW6prob3.txt
 
 % Load data
-load("prob4datafile.mat")
-basis = 6:11;
-show = true;
+load("prob3datafile.mat")
+basis = 1:1000;
+show = false;
 
 % Run dual method
 [x, ofv, y] = dualMethod(A, b, c, basis, show);
 
 % Show results
+%{
 disp("OFV: ")
 disp(ofv)
 disp("x: ")
@@ -229,6 +236,7 @@ disp(y')
 disp('cTx = yTb')
 c' * x
 y * b
+%}
 
 % Turn diary off
 diary off
