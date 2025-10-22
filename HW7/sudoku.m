@@ -170,7 +170,7 @@ end
 %% Solve linear program
 
 % Use intlinprog
-x = intlinprog(c, 1:324, [], [], A, b);
+x = intlinprog(c, (1:729)', [], [], A, b, zeros(729, 1), ones(729, 1));
 
 % Decode x
 big_M = zeros(size(M, 1), size(M, 2));
