@@ -9,6 +9,30 @@ function [position] = indexToPosition(i, j, k, l, m)
     
 end
 
+function [i, j, k, l, m] = positionToIndex(position)
+    
+    % Find i
+    rem = int16(position - 1);
+    i = idivide(rem, 3 ^ 5) + 1;
+    rem = rem - (i - 1) * 3 ^ 5;
+
+    % Find j
+    j = idivide(rem, 3 ^ 4) + 1;
+    rem = rem - (j - 1) * 3 ^ 4;
+
+    % Find k
+    k = idivide(rem, 3 ^ 3) + 1;
+    rem = rem - (k - 1) * 3 ^ 3;
+
+    % Find l
+    l = idivide(rem, 3 ^ 2) + 1;
+    rem = rem - (l - 1) * 3 ^ 2;
+
+    % Find m
+    m = rem + 1;
+
+end
+
 % Define input board
 M = [8 0 0 0 0 0 0 0 0;
      0 0 3 6 0 0 0 0 0;
@@ -144,4 +168,26 @@ for j = 1:3
 end
 
 %% Solve linear program
+
+% Use intlinprog
 x = intlinprog(c, 1:324, [], [], A, b);
+
+% Decode x
+big_M = [];
+for ind = 1:size(x, 1)
+    
+    % Ensure x is one
+    if x(ind, :) == 1
+    
+        % Get coordinates
+        [i, j, k, l, m] = positionToIndex(ind);
+    
+        % Get row and column index
+        row_index = (i - 1) * 3 + k;
+        col_index = (j - 1) * 3 + l;
+    
+        % Set entry of M equal to m
+        M(row_index, col_index) = m;
+
+    end
+end
