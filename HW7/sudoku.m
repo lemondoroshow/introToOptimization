@@ -1,5 +1,8 @@
 %% Boilerplate
 
+% Turn on diary
+diary HW7prob1.txt
+
 function [position] = indexToPosition(i, j, k, l, m)
 
     % Convert x_ijklm to x_position
@@ -211,3 +214,12 @@ end
 
 % Calculate error ratio
 error_ratio = errors / total_entries;
+
+% Display
+disp('M')
+disp(big_M)
+disp('Error ratio')
+disp(error_ratio)
+
+% Turn off diary
+diary off
