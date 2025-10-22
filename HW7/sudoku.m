@@ -173,7 +173,7 @@ end
 x = intlinprog(c, 1:324, [], [], A, b);
 
 % Decode x
-big_M = [];
+big_M = zeros(size(M, 1), size(M, 2));
 for ind = 1:size(x, 1)
     
     % Ensure x is one
@@ -187,7 +187,27 @@ for ind = 1:size(x, 1)
         col_index = (j - 1) * 3 + l;
     
         % Set entry of M equal to m
-        M(row_index, col_index) = m;
+        big_M(row_index, col_index) = m;
 
     end
 end
+
+% Find error ratio
+total_entries = 0;
+errors = 0;
+for R = 1:size(M, 1)
+    for C = 1:size(M, 2)
+        
+        % Increment entries
+        total_entries = total_entries + 1;
+
+        % Add error if necessary
+        if M(R, C) ~= big_M(R, C) & ...
+                M(R, C) ~= 0
+            errors = errors + 1;
+        end
+    end
+end
+
+% Calculate error ratio
+error_ratio = errors / total_entries;
