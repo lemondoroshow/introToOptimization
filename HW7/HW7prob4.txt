@@ -1,0 +1,60 @@
+Running HiGHS 1.7.1: Copyright (c) 2024 HiGHS under MIT licence terms
+Coefficient ranges:
+  Matrix [1e+00, 1e+00]
+  Cost   [1e+00, 1e+00]
+  Bound  [1e+00, 1e+00]
+  RHS    [1e+00, 1e+00]
+Presolving model
+567 rows, 729 cols, 5103 nonzeros  0s
+567 rows, 729 cols, 5103 nonzeros  0s
+Objective function is integral with scale 1
+
+Solving MIP model with:
+   567 rows
+   729 cols (729 binary, 0 integer, 0 implied int., 0 continuous)
+   5103 nonzeros
+
+        Nodes      |    B&B Tree     |            Objective Bounds              |  Dynamic Constraints |       Work      
+     Proc. InQueue |  Leaves   Expl. | BestBound       BestSol              Gap |   Cuts   InLp Confl. | LpIters     Time
+
+         0       0         0   0.00%   0               inf                  inf        0      0      0         0     0.0s
+ T       0       0         0   0.00%   0               66               100.00%        0      0      0      1124     0.1s
+
+Solving report
+  Status            Optimal
+  Primal bound      66
+  Dual bound        66
+  Gap               0% (tolerance: 0.01%)
+  Solution status   feasible
+                    66 (objective)
+                    0 (bound viol.)
+                    4.66293670343e-15 (int. viol.)
+                    0 (row viol.)
+  Timing            0.07 (total)
+                    0.01 (presolve)
+                    0.00 (postsolve)
+  Nodes             1
+  LP iterations     1124 (total)
+                    0 (strong br.)
+                    0 (separation)
+                    0 (heuristics)
+
+Optimal solution found.
+
+Intlinprog stopped at the root node because the <a href = "matlab: helpview('optim','milp_abs_gap','CSHelpWindow');">objective value is within a gap tolerance</a> of the optimal value, options.AbsoluteGapTolerance = 1e-06. The intcon variables are
+<a href = "matlab: helpview('optim','milp_integer_within_tolerance','CSHelpWindow');">integer within tolerance</a>, options.ConstraintTolerance = 1e-06.
+
+M
+     1     2     3     6     4     5     0     9     7
+     4     5     6     0     7     8     0     0     1
+     7     8     9     0     1     0     5     6     4
+     5     6     0     7     0     9     3     1     2
+     0     0     0     1     2     0     6     4     5
+     2     0     1     0     5     6     9     7     0
+     9     7     0     2     0     1     0     5     6
+     3     1     2     5     6     0     7     0     0
+     6     4     5     0     9     7     1     2     0
+
+Error ratio
+    0.0123
+
