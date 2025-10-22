@@ -1,0 +1,6 @@
+Mean
+    0.5953
+
+Standard deviation
+    0.1293
+
