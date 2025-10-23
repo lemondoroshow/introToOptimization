@@ -31,8 +31,8 @@ Solving report
                     0 (bound viol.)
                     0 (int. viol.)
                     0 (row viol.)
-  Timing            0.43 (total)
-                    0.00 (presolve)
+  Timing            0.44 (total)
+                    0.01 (presolve)
                     0.00 (postsolve)
   Nodes             1
   LP iterations     1504 (total)

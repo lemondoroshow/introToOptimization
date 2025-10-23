@@ -176,6 +176,7 @@ end
 x = intlinprog(c, (1:729)', [], [], A, b, zeros(729, 1), ones(729, 1));
 
 % Decode x
+x = round(x, 0);
 big_M = zeros(size(M, 1), size(M, 2));
 for ind = 1:size(x, 1)
     
