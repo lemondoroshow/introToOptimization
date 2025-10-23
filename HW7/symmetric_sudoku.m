@@ -88,8 +88,8 @@ A_row = 0;
 
 % Set 1-integer constraints
 for i = 1:3
-    for k = 1:3
-        for j = 1:3
+    for j = 1:3
+        for k = 1:3
             for l = 1:3
                 
                 % Increment row of A to operate on
