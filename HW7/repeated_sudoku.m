@@ -78,8 +78,8 @@ for loop_no = 1:1000
     
     % Set 1-integer constraints
     for i = 1:3
-        for k = 1:3
-            for j = 1:3
+        for j = 1:3
+            for k = 1:3
                 for l = 1:3
                     
                     % Increment row of A to operate on
@@ -162,10 +162,11 @@ for loop_no = 1:1000
     
     % Use intlinprog
     opt = optimoptions("intlinprog", display = "off");
-    x = intlinprog(c, (1:729)', [], [], A, b, zeros(729, 1), ones(729, 1), ...
+    x = intlinprog(c, 1:729, [], [], A, b, zeros(729, 1), ones(729, 1), ...
                    [], opt);
     
     % Decode x
+    x = round(x, 0);
     big_M = zeros(size(M, 1), size(M, 2));
     for ind = 1:size(x, 1)
         
