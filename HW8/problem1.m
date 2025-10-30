@@ -1,3 +1,6 @@
+% Turn on diary
+diary HW8prob1.txt
+
 %% First trial
 
 % Set matrices
@@ -20,7 +23,8 @@ for i = 1:100
 end
 
 % Plot v
-plot(v, zeros(1, 100), 'r.')
+fig = plot(v, zeros(1, 100), 'r.');
+saveas(fig, "prob1trial1.png")
 
 %% Second trial
 
@@ -44,4 +48,8 @@ for i = 1:100
 end
 
 % Plot v
-plot(v, zeros(1, 100), 'r.')
+fig = plot(v, zeros(1, 100), 'r.');
+saveas(fig, "prob1trial2.png")
+
+%% Turn off diary
+diary off
