@@ -1,3 +1,9 @@
+% Turn on scientific notation
+format longG
+
+% Turn on diary
+diary HW9prob3.txt
+
 function [output] = NewtonRosenbrock(start, numiter)
     vect = start;
     output = vect';
@@ -22,5 +28,14 @@ function [output] = NewtonRosenbrock(start, numiter)
     end
 end
 
-% Test
-output = NewtonRosenbrock([9; 8], 5)
+% Run program
+output = NewtonRosenbrock([26; 100], 5);
+disp("Final vector")
+disp(output(6, :))
+
+% Plot and save
+fig = scatter(output(:, 1), output(:, 2), 18, 'magenta', 'filled');
+saveas(fig, "prob3.png")
+
+% Turn off diary
+diary off
