@@ -1,8 +1,8 @@
-function [output] = steepest_descent(start, numiter)
+format longG
 
-    % Get initial guess
-    % ofv = (1 - start(1))^2 + 100 * (start(2) - start(1)^2)^2;
+function [output] = steepest_descent(start, numiter)
     vect = start;
+    output = vect';
 
     % Loop numiter times
     for i = 1:numiter
@@ -47,9 +47,11 @@ function [output] = steepest_descent(start, numiter)
 
         % Calculate next vector
         vect = [u; v] + alpha_star * [a; b];
-        output = vect
+        output = [output; vect'];
         
     end
 end
 
+% Test
 output = steepest_descent([9; 8], 4);
+scatter(output(:, 1), output(:, 2), 18, 'magenta', 'filled')
