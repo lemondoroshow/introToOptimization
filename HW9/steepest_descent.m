@@ -4,7 +4,7 @@ format longG
 % Turn on diary
 diary HW9prob2.txt
 
-function [output] = steepest_descent(start, numiter)
+function [output] = steepestRosenbrock(start, numiter)
     vect = start;
     output = vect';
 
@@ -57,7 +57,7 @@ function [output] = steepest_descent(start, numiter)
 end
 
 % Run program
-output = steepest_descent([26; 100], 31000);
+output = steepestRosenbrock([26; 100], 31000);
 disp("Final vector")
 disp(output(31001, :))
 
