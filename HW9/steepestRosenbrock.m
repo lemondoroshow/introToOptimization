@@ -1,4 +1,8 @@
+% Turn on scientific notation
 format longG
+
+% Turn on diary
+diary HW9prob2.txt
 
 function [output] = steepest_descent(start, numiter)
     vect = start;
@@ -52,6 +56,14 @@ function [output] = steepest_descent(start, numiter)
     end
 end
 
-% Test
-output = steepest_descent([9; 8], 4);
-scatter(output(:, 1), output(:, 2), 18, 'magenta', 'filled')
+% Run program
+output = steepest_descent([26; 100], 31000);
+disp("Final vector")
+disp(output(31001, :))
+
+% Plot and save
+fig = scatter(output(:, 1), output(:, 2), 18, 'magenta', 'filled');
+saveas(fig, "prob2.png")
+
+% Turn off diary
+diary off
