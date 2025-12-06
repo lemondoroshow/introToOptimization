@@ -2,15 +2,18 @@
 format shortG
 
 % Turn on diary
-diary HW10prob2a.txt
+diary HW10prob2b.txt
+
+%% Find feasible, bounded linear program
+m=10;n=20;A=randn(m,n);b=randn(m,1);c=randn(n,1);x=linprog(c,[],[],A,b,zeros(1,n),[])
+
+%% Solve program
 
 % Define data
-Q = zeros(7, 7);
-c = [-1.8; -1.4; -1.2; -1; 0; 0; 0];
-A = [0 0 6 10 1 0 0;
-     0 12 8 6 0 1 0;
-     16 4 2 0 0 0 1];
-b = [17600; 21120; 12320];
+Q = zeros(20, 20);
+c
+A
+b
 
 function [x, y, z, k] = QuadraticOptimization(Q, c, A, b, show)
 
@@ -102,7 +105,7 @@ function [x, y, z, k] = QuadraticOptimization(Q, c, A, b, show)
 end
 
 % Run quadratic program
-[x, y, z, k] = QuadraticOptimization(Q, c, A, b, false)
+[xq, y, z, k] = QuadraticOptimization(Q, c, A, b, false)
 eps_min = 0.1
 eps_max = 0.9
 delta = 0.5
