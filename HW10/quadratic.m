@@ -2,17 +2,15 @@
 format shortG
 
 % Turn on diary
-diary HW10prob1.txt
+diary HW10prob2a.txt
 
 % Define data
-Q = [4 1 1 1;
-     1 5 2 1;
-     1 2 6 2;
-     1 1 2 7];
-c = [2; -3; 1; -4];
-A = [1 0 -2 1;
-     0 -2 1 -3];
-b = [-1; 2];
+Q = zeros(7, 7);
+c = [-1.8; -1.4; -1.2; -1; 0; 0; 0];
+A = [0 0 6 10 1 0 0;
+     0 12 8 6 0 1 0;
+     16 4 2 0 0 0 1];
+b = [17600; 21120; 12320];
 
 function [x, y, z, k] = QuadraticOptimization(Q, c, A, b, show)
 
