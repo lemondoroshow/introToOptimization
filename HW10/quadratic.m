@@ -1,3 +1,5 @@
+%% Set up problem
+
 % Turn off scientific notation
 format shortG
 
@@ -24,19 +26,25 @@ x = ones(n, 1);
 y = ones(m, 1);
 z = ones(n, 1);
 
+% Compile vector
+xyz = [x; y; z];
+disp('Problem initialized')
+
+%% Solve problem
+
 % Iterate until done
 finished = false;
-k = 1;
+k = 0;
 while ~finished
     
-    % Compile vector
-    xyz = [x; y; z];
+    % Iterate trial
+    k = k + 1;
 
     % Get epsilon value based on parity
     eps = mod(k, 2) * eps_min + abs(1 - mod(k, 2)) * eps_max;
 
     % Find avg complementarity
-    beta = z' * x / n;
+    beta = (z' * x) / n;
 
     % Find F of current vector subject to beta-epsilon
     F = [-Q * x - c + A' * y + z;
@@ -44,17 +52,57 @@ while ~finished
          (z .* x) - (ones(n, 1) * eps * beta)];
 
     % Find gradient of F
-    % Transposed for consistency but it's a Jacobian so it's symmetric
     grad_F = [-Q, A', eye(n);
-                A, zeros(m, m), zeros(m, n);
-                diag(z), zeros(n, m), diag(x)]';
+              A, zeros(m, m), zeros(m, n);
+              diag(z), zeros(n, m), diag(x)];
     
     % Find vector gradient 
-    grad_xyz = -1 * grad_F \ F;
+    grad_xyz = -grad_F \ F;
 
     % Find maximum z_i * x_i
     limit = delta * beta;
-
+    limit_vect = ones(n, 1) .* limit;
     
-    break
+    % Choose alpha
+    h = 0.00001;
+    alpha = 0;
+    in_nbhd = true;
+    while alpha <= 1 && in_nbhd 
+
+        % Calculate "step"
+        xyz_new = xyz + alpha .* grad_xyz;
+
+        % Check if new vector is in neighborhood
+        in_nbhd = all(xyz_new(1:n, 1) .* xyz_new(n+m+1:n+m+n) ...
+                      >= limit_vect);
+
+        if in_nbhd
+            xyz = xyz_new;
+            alpha = alpha + h;
+        end
+    end
+
+    % Calculate new vector
+    x = xyz(1:n, 1);
+    y = xyz(n+1:n+m, 1);
+    z = xyz(n+m+1:n+m+n);
+    
+    % Check terminating condition
+    finished = norm([-Q * x - c + A' * y + z;
+                     A * x - b;
+                     (z .* x) - (ones(n, 1) * eps * beta)]) < .000001;
+    
+    % Debugging
+    disp(k)
+    % disp([x; y; z])
+    disp(norm([-Q * x - c + A' * y + z;
+                     A * x - b;
+                     (z .* x) - (ones(n, 1) * eps * beta)]))
+    disp('------')
 end
+
+%% Check solution
+[xI,fval,exitflag,output,lambda] = quadprog(Q,c,[],[],A,b,zeros(4,1),[inf inf inf inf]');
+zI=lambda.lower;
+yI=-lambda.eqlin;
+checkx=[-Q*x-c+A'*y+z; A*x-b; x.*z];
