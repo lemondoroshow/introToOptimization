@@ -23,9 +23,9 @@ function [x, y, z, k] = QuadraticOptimization(Q, c, A, b, show)
     
     % Initialize values of x, y, z, delta, epsilons
     % These are basically entirely test values or given
-    eps_min = 0.1;
-    eps_max = 0.9;
-    delta = 0.5;
+    eps_min = 0.01;
+    eps_max = 0.99;
+    delta = 0.1;
     x = ones(n, 1);
     y = ones(m, 1);
     z = ones(n, 1);
@@ -106,9 +106,6 @@ end
 
 % Run quadratic program
 [xq, y, z, k] = QuadraticOptimization(Q, c, A, b, false)
-eps_min = 0.1
-eps_max = 0.9
-delta = 0.5
 
 % Turn off diary
 diary off
